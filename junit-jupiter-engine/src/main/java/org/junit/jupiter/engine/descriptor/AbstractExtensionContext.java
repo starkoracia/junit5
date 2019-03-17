@@ -14,13 +14,12 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toCollection;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-
 import java.util.concurrent.atomic.AtomicInteger;
+
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.engine.config.JupiterConfiguration;
 import org.junit.jupiter.engine.execution.ExtensionValuesStore;
@@ -109,7 +108,8 @@ abstract class AbstractExtensionContext<T extends TestDescriptor> implements Ext
 			String key = values.keySet().iterator().next();
 			String value = values.get(key);
 			if ("checkpoint".equals(key)) {
-				UniqueId checkpointId = this.testDescriptor.getUniqueId().append("checkpoint", "#" + CHECKPOINT_COUNTER.getAndIncrement());
+				String idValue = "#" + CHECKPOINT_COUNTER.getAndIncrement();
+				UniqueId checkpointId = this.testDescriptor.getUniqueId().append("checkpoint", idValue);
 				TestSource checkpointSource = this.testDescriptor.getSource().orElse(null);
 				Checkpoint checkpoint = new Checkpoint(checkpointId, value, checkpointSource);
 				this.testDescriptor.addChild(checkpoint);

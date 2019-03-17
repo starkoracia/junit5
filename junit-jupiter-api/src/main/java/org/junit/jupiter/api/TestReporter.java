@@ -10,6 +10,7 @@
 
 package org.junit.jupiter.api;
 
+import static org.apiguardian.api.API.Status.EXPERIMENTAL;
 import static org.apiguardian.api.API.Status.STABLE;
 
 import java.util.Collections;
@@ -77,4 +78,8 @@ public interface TestReporter {
 		this.publishEntry("value", value);
 	}
 
+	@API(status = EXPERIMENTAL, since = "5.5")
+	default void checkpoint(String message) {
+		this.publishEntry("checkpoint", message);
+	}
 }
